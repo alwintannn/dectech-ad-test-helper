@@ -1,6 +1,6 @@
-import streamlit as st
 import numpy as np
 import cv2
+import streamlit as st
 import math
 import io
 import base64
@@ -197,7 +197,8 @@ def dectech_blur(im, l, section):
 st.set_option('deprecation.showfileUploaderEncoding', False)
 # Title
 st.title("Ad Test Deck Helper")
-st.text("Version 1.0")
+st.info("Version 1.0")
+st.info("Please follow the instructions in the sidebar to use the helper app.")
 
 # Sidebar (Storyboard Generator)
 st.sidebar.title("Storyboard Generator")
@@ -256,7 +257,7 @@ if st.sidebar.button("Generate storyboard"):
 
 # Sidebar (Radial Bar Chart)
 st.sidebar.title("Radial Bar Chart Generator")
-uploaded_chart = st.sidebar.file_uploader("Select radial bar chart...", type=["png", "jpg"])
+uploaded_chart = st.sidebar.file_uploader("Select the full radial bar chart...", type=["png", "jpg"])
 output_filename_chart = st.sidebar.text_input("Output filename (e.g. JustEat):")
 if output_filename_chart == "":
     output_filename_chart = "Unnamed"
