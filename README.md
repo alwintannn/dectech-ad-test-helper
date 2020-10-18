@@ -10,6 +10,7 @@ This script take mp4 files as input and will take screenshots at equal intervals
 
 ## How to run this app
 
+### Option 1: Install locally using requirements.txt
 The app requires Python 3.7. **I'd would be easier to create a new virtual environment**, then running:
 
 ```{sh}
@@ -19,11 +20,14 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Some users may experience issue when importing `Shapely`. If that happens to you, the best way to fix it is to switch to `conda`:
+Some users may experience issues when importing `Shapely`. If that happens to you, the best way to fix it is to switch to `conda`:
 
 ```{sh}
 pip uninstall shapely
 conda install -c conda-forge shapely
 ```
-
+### Option 2: Run Docker image
 Alternatively, please check out the [Docker image](https://hub.docker.com/repository/docker/presstofan/dt-ad-test-helper).
+
+### Option 3: Access via Streamlit Share
+The app is temporarily available at [Streamlit Share]( https://share.streamlit.io/presstofan/dectech-ad-test-helper/app.py)
