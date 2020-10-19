@@ -31,7 +31,7 @@ def take_screenshots(filename, screenshot_n):
     # take screenshots
     # success,image = cap.read()
     count = 0
-    success = 1
+    success = True
     black_frame_this = False
     black_frame_last = False
 
@@ -46,27 +46,27 @@ def take_screenshots(filename, screenshot_n):
             else:
                 black_frame_this = False
 
-        # print(count, count%screenshot_frame == 0)
+            # print(count, count%screenshot_frame == 0)
 
-        if black_frame_last is False:
+            if black_frame_last is False:
 
-            if count % screenshot_frame == 0 and black_frame_this is False:
-                cv2.imwrite('screenshots_temp/' + f'{count:05}_' + '.jpg', image)
-                # st.text('successfully wrote a frame:' + str(count))
+                if count % screenshot_frame == 0 and black_frame_this is False:
+                    cv2.imwrite('screenshots_temp/' + f'{count:05}_' + '.jpg', image)
+                    # st.text('successfully wrote a frame:' + str(count))
 
-            elif black_frame_this is True:
-                black_frame_last = True
+                elif black_frame_this is True:
+                    black_frame_last = True
 
-        if black_frame_last is True:
-            if black_frame_this is False:
-                cv2.imwrite('screenshots_temp/' + f'{count:05}_' + '.jpg', image)
-                # st.text('successfully wrote a frame:' + str(count))
-                black_frame_last = False
+            if black_frame_last is True:
+                if black_frame_this is False:
+                    cv2.imwrite('screenshots_temp/' + f'{count:05}_' + '.jpg', image)
+                    # st.text('successfully wrote a frame:' + str(count))
+                    black_frame_last = False
 
-            elif black_frame_this is True:
-                black_frame_last = True
+                elif black_frame_this is True:
+                    black_frame_last = True
 
-        count += 1
+            count += 1
 
 
 def combine_screenshots():
@@ -245,7 +245,7 @@ if st.sidebar.button("Generate storyboard"):
             print('Failed to delete %s. Reason: %s' % (file_path, e))
 
     # Take screenshots
-    take_screenshots(temporary_location, screenshot_n)
+    take_screenshots("video_temp/temp.mp4", screenshot_n)
     # Combine screenshots to generate storyboard
     combine_screenshots()
 
