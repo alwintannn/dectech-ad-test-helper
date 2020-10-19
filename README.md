@@ -42,5 +42,5 @@ docker pull presstofan/dt-ad-test-helper:v1.0
 docker run --rm -it -p 8501:8501 presstofan/dt-ad-test-helper:v1.0
 ```
 
-### Option 3: Access via Streamlit Share
+### Option 3: Access via Streamlit Share [No longer available]
 The app is temporarily available at [Streamlit Share](https://share.streamlit.io/presstofan/dectech-ad-test-helper/app.py).
