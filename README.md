@@ -11,7 +11,14 @@ This function takes the overall ad test radial bar chart as an input and generat
 ## How to run this app
 
 ### Option 1: Install locally using requirements.txt
-The app requires Python 3.7. **I'd would be easier to create a new virtual environment**, then running:
+The app requires Python 3.7. **It would be easier to create a new virtual environment**:
+
+```{sh}
+conda create -n adtest python=3.7
+conda activate adtest
+```
+
+Then running:
 
 ```{sh}
 git clone https://github.com/presstofan/dectech-ad-test-helper.git
@@ -20,7 +27,7 @@ pip install -r requirements.txt
 streamlit run app.py
 ```
 
-Some users may experience issues when importing `Shapely`. If that happens to you, the best way to fix it is to switch to `conda`:
+Some users may experience issues when importing `Shapely`. If that happens to you, the best way to fix it is to reinstall `Shapely` using `conda`:
 
 ```{sh}
 pip uninstall shapely
