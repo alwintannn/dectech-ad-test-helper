@@ -51,7 +51,8 @@ def take_screenshots(filename, screenshot_n):
             if black_frame_last is False:
 
                 if count % screenshot_frame == 0 and black_frame_this is False:
-                    cv2.imwrite('screenshots_temp/' + f'{count:05}_' + '.jpg', image)
+                    cv2.imwrite('screenshots_temp/' +
+                                f'{count:05}_' + '.jpg', image)
                     # st.text('successfully wrote a frame:' + str(count))
 
                 elif black_frame_this is True:
@@ -59,7 +60,8 @@ def take_screenshots(filename, screenshot_n):
 
             if black_frame_last is True:
                 if black_frame_this is False:
-                    cv2.imwrite('screenshots_temp/' + f'{count:05}_' + '.jpg', image)
+                    cv2.imwrite('screenshots_temp/' +
+                                f'{count:05}_' + '.jpg', image)
                     # st.text('successfully wrote a frame:' + str(count))
                     black_frame_last = False
 
@@ -71,7 +73,8 @@ def take_screenshots(filename, screenshot_n):
 
 def combine_screenshots():
     # get all screenshot files
-    list_im = [f for f in listdir('screenshots_temp') if isfile(join('screenshots_temp', f))]
+    list_im = [f for f in listdir('screenshots_temp') if isfile(
+        join('screenshots_temp', f))]
     list_im.sort()
     imgs = [Image.open('screenshots_temp/'+i) for i in list_im]
 
@@ -174,19 +177,24 @@ def dectech_blur(im, l, section):
 
     # combine two sections together
     im_new = Image.new('RGBA', (l, l), (255, 255, 255, 0))
-    im_new.paste(im_grey_bl, (int(l/2*(1-ratio_grey)), int(l/2*(1-ratio_grey)))) # need to shift the greyout chart so they match
+    # need to shift the greyout chart so they match
+    im_new.paste(im_grey_bl, (int(l/2*(1-ratio_grey)),
+                              int(l/2*(1-ratio_grey))))
     im_new.paste(im_focus, (0, 0), im_focus)
 
     # rotate image
-    output_im = im_new.rotate(rotation_angle[section], resample=Image.BICUBIC, expand=True)
+    output_im = im_new.rotate(
+        rotation_angle[section], resample=Image.BICUBIC, expand=True)
 
     # crop image
     image_data = np.asarray(output_im)
     image_data_bw = image_data.max(axis=2)
     non_empty_columns = np.where(image_data_bw.max(axis=0) > 0)[0]
     non_empty_rows = np.where(image_data_bw.max(axis=1) > 0)[0]
-    cropBox = (min(non_empty_rows), max(non_empty_rows), min(non_empty_columns), max(non_empty_columns))
-    image_data_new = image_data[cropBox[0]:cropBox[1]+1, cropBox[2]:cropBox[3]+1, :]
+    cropBox = (min(non_empty_rows), max(non_empty_rows),
+               min(non_empty_columns), max(non_empty_columns))
+    image_data_new = image_data[cropBox[0]
+        :cropBox[1]+1, cropBox[2]:cropBox[3]+1, :]
     output_im_crop = Image.fromarray(image_data_new)
 
     return(output_im_crop)
@@ -208,7 +216,8 @@ if st.sidebar.button("Preview video"):
     video_bytes = video_file.read()
     st.video(video_bytes)
 screenshot_n = st.sidebar.slider("Number of screenshots:", 1, 50, 30)
-output_filename = st.sidebar.text_input("Output filename (e.g. JustEat_Storyboard):")
+output_filename = st.sidebar.text_input(
+    "Output filename (e.g. JustEat_Storyboard):")
 if output_filename == "":
     output_filename = "Unnamed"
 
@@ -253,12 +262,15 @@ if st.sidebar.button("Generate storyboard"):
     st.balloons()
 
     # Download the storyboard
-    st.markdown(get_binary_file_downloader_html('screenshots_combined/' + output_filename + '.jpg', "Storyboard"), unsafe_allow_html=True)
+    st.markdown(get_binary_file_downloader_html('screenshots_combined/' +
+                                                output_filename + '.jpg', "Storyboard"), unsafe_allow_html=True)
 
 # Sidebar (Radial Bar Chart)
 st.sidebar.title("Radial Bar Chart Generator")
-uploaded_chart = st.sidebar.file_uploader("Select the full radial bar chart...", type=["png", "jpg"])
-output_filename_chart = st.sidebar.text_input("Output filename (e.g. JustEat):")
+uploaded_chart = st.sidebar.file_uploader(
+    "Select the full radial bar chart...", type=["png", "jpg"])
+output_filename_chart = st.sidebar.text_input(
+    "Output filename (e.g. JustEat):")
 if output_filename_chart == "":
     output_filename_chart = "Unnamed"
 
@@ -285,15 +297,22 @@ if st.sidebar.button("Generate separate bar charts"):
     for metric in metrics:
         percent_complete += 25
         my_bar.progress(percent_complete)
-        im = Image.open("chart_temp/" + "temp.png").convert('RGBA')  # read the overall chart
-        im_new = dectech_blur(im, 600, metric)  # do the Dectech Blur
-        im_new.save("chart_temp/" + output_filename_chart + metric + ".png")  # save the output chart for each section
+        # read the overall chart
+        im = Image.open("chart_temp/" + "temp.png").convert('RGBA')
+        width, height = im.size  # Get image size
+        im_new = dectech_blur(im, width, metric)  # do the Dectech Blur
+        # save the output chart for each section
+        im_new.save("chart_temp/" + output_filename_chart + metric + ".png")
 
     st.success('Done!')
     st.balloons()
 
     # Download the separate bar charts
-    st.markdown(get_binary_file_downloader_html('chart_temp/' + output_filename_chart + 'lm.png', "Lasting Impression"), unsafe_allow_html=True)
-    st.markdown(get_binary_file_downloader_html('chart_temp/' + output_filename_chart + 'em.png', "Emotion"), unsafe_allow_html=True)
-    st.markdown(get_binary_file_downloader_html('chart_temp/' + output_filename_chart + 'in.png', "Information"), unsafe_allow_html=True)
-    st.markdown(get_binary_file_downloader_html('chart_temp/' + output_filename_chart + 'im.png', "Impact"), unsafe_allow_html=True)
+    st.markdown(get_binary_file_downloader_html('chart_temp/' +
+                                                output_filename_chart + 'lm.png', "Lasting Impression"), unsafe_allow_html=True)
+    st.markdown(get_binary_file_downloader_html('chart_temp/' +
+                                                output_filename_chart + 'em.png', "Emotion"), unsafe_allow_html=True)
+    st.markdown(get_binary_file_downloader_html('chart_temp/' +
+                                                output_filename_chart + 'in.png', "Information"), unsafe_allow_html=True)
+    st.markdown(get_binary_file_downloader_html('chart_temp/' +
+                                                output_filename_chart + 'im.png', "Impact"), unsafe_allow_html=True)
